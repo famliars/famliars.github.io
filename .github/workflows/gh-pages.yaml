@@ -31,4 +31,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
             node-version: 18
-      - run: cd tsvetak && npm run deploy
+      - run: cd tsvetak 
+      - run: npm i
+      - run: npm run deploy
