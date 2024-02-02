@@ -31,6 +31,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
             node-version: 18
-      - run: cd tsvetak 
-      - run: npm i
-      - run: npm run deploy
+      - name: Running
+        run: cd tsvetak 
+        run: npm run deploy
+      - name: Setup config
+        run: |
+          git config --global user.email "${{ vars.USEREMAIL }}"
+          git config --global user.name "${{ vars.USERNAME }}"
+
+      - name: Setup commit
+        run: |
+          git add --all
+          git commit -m "python runner"
+          git push
