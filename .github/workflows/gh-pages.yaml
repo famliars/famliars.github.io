@@ -32,8 +32,9 @@ jobs:
         with:
             node-version: 18
       - name: Running
-        run: cd tsvetak 
-        run: npm run deploy
+        run: |
+          cd tsvetak 
+          npm run deploy
       - name: Setup config
         run: |
           git config --global user.email "${{ vars.USEREMAIL }}"
