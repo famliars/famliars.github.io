@@ -42,12 +42,18 @@ jobs:
         run: |
          npm install ./home
          npm --prefix ./home run build
-      - name: Deploy Home
+      - name: Configure Git
         run: |
          git config --global user.name "${{ vars.USERNAME }}"
          git config --global user.email "${{ vars.USEREMAIL}}"
-         git switch gh-pages
+      - name: Switch Branch
+        run: |
+         git branch -b gh-pages
+      - name: Deploy Home
+        run: |
          git rm -r .
-         git add -A ./home/build/*
+         git add -A ./home/build/* .
          git commit -m "gh-pages deploy"
+      - name: Deploy Push
+        run: |
          git push origin gh-pages
