@@ -41,7 +41,7 @@ jobs:
         run: |
           git config --global user.name "${{ vars.USERNAME }}"
           git config --global user.email "${{ vars.USEREMAIL }}"
-          git remote set-url origin https://${{ github.actor }}:${{ secrets.GH_PAGES_TOKEN }}@github.com/${{ github.repository }}
+          git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
       - name: Switch Branch
         run: |
           git branch -D gh-pages || true
