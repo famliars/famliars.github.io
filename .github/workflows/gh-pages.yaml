@@ -51,4 +51,4 @@ jobs:
           git commit -m "gh-pages deploy"
       - name: Deploy Push
         run: |
-          git push origin HEAD:gh-pages --force 
+          git push https://${{ github.actor }}:${{ secrets.GH_PAGES_TOKEN }}@github.com/${{ github.repository }} HEAD:gh-pages --force 
