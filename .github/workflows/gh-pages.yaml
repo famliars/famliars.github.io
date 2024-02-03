@@ -49,12 +49,12 @@ jobs:
          git config --global user.email "${{ vars.USEREMAIL}}"
       - name: Switch Branch
         run: |
-         git branch gh-pages
+         git branch -D gh-pages
+         git checkout -b gh-pages
       - name: Deploy Home
         run: |
-         git rm -r .
-         git add -A ./home/build/* .
+         git add -f ./home/build/
          git commit -m "gh-pages deploy"
       - name: Deploy Push
         run: |
-         git push origin gh-pages
+         git push origin gh-pages --force
