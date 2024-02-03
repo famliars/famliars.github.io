@@ -51,4 +51,4 @@ jobs:
           git commit -m "gh-pages deploy"
       - name: Deploy Push
         run: |
-          git push --set-upstream origin gh-pages
+          git push --set-upstream origin gh-pages -u ${{ secrets.GH_PAGES_TOKEN }}
