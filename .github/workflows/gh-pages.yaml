@@ -51,4 +51,4 @@ jobs:
           git commit -m "gh-pages deploy"
       - name: Deploy Push
         run: |
-          git push
+          git push --set-upstream origin gh-pages
