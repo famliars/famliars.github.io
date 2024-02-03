@@ -2,8 +2,8 @@ name: Deploy GitHub Pages
 
 on:
   # Runs on pushes targeting the default branch
-  # push:
-  #   branches: ["main"]
+  push:
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -36,9 +36,9 @@ jobs:
       - name: Running
         run: |
           cd tsvetak 
-          yarn deploy
-         # npm install
-        #  npm run deploy
+          npm install
+          npm run build
+          ls
       #- name: Setup commit
       #  run: |
       #    git commit -m "gh pages"
