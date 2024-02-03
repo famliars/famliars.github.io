@@ -29,17 +29,19 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Nodejs
         uses: actions/setup-node@v4
-      - name: Setup config
-        run: |
-          git config --global user.email "light.link.point@gmail.com"
-          git config --global user.name "Tsvetak"
-      - name: Running
-        run: |
-          cd tsvetak 
-          npm install
-          npm run build
-          ls
-      #- name: Setup commit
-      #  run: |
-      #    git commit -m "gh pages"
-      #    git push
+      - name: Build 
+          run: |
+            cd tsvetak 
+            npm install
+            npm run build
+      - name: Setup Git
+          run: |
+            git config --global user.email "light.link.point@gmail.com"
+            git config --global user.name "Tsvetak"
+      - name: Setup gh-pages
+          run: |
+            git branch --origin gh-pages
+            git rm -r .
+            git add -A build/*
+            git commit -m "gh pages"
+            git push
