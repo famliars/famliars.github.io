@@ -36,9 +36,10 @@ jobs:
       - name: Running
         run: |
           cd tsvetak 
-          npm install
-          npm run deploy
-      - name: Setup commit
-        run: |
-          git commit -m "gh pages"
-          git push
+          yarn deploy
+         # npm install
+        #  npm run deploy
+      #- name: Setup commit
+      #  run: |
+      #    git commit -m "gh pages"
+      #    git push
