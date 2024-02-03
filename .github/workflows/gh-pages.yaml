@@ -27,21 +27,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Nodejs
+      - name: Build
         uses: actions/setup-node@v4
-      - name: Build 
+          with:
+            node-version: 18
+      - name: Build Home 
           run: |
-            cd tsvetak 
-            npm install
-            npm run build
-      - name: Setup Git
-          run: |
-            git config --global user.email "light.link.point@gmail.com"
-            git config --global user.name "Tsvetak"
-      - name: Setup gh-pages
-          run: |
-            git branch --origin gh-pages
-            git rm -r .
-            git add -A build/*
-            git commit -m "gh pages"
-            git push
+            npm install home
+            npm --prefix home run build
+      - name: Deploy Home
