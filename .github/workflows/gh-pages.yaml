@@ -41,6 +41,7 @@ jobs:
         run: |
           git config --global user.name "${{ vars.USERNAME }}"
           git config --global user.email "${{ vars.USEREMAIL }}"
+          git remote set-url origin https://${{ github.actor }}:${{ secrets.GH_PAGES_TOKEN }}@github.com/${{ github.repository }}
       - name: Switch Branch
         run: |
           git branch gh-pages
@@ -51,4 +52,4 @@ jobs:
       - name: Deploy Push
         run: |
           git commit -m "gh-pages deploy"
-          git push --set-upstream origin gh-pages -u ${{ secrets.GH_PAGES_TOKEN }}
+          git push origin gh-pages
