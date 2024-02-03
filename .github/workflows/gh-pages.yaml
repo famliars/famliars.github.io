@@ -38,7 +38,6 @@ jobs:
       - name: Build Home
         run: npm --prefix ./home run build
       - name: Deploy Home
-        uses: JamesIves/github-pages-deploy-action@4.1.1
-        with:
-          branch: gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with
           folder: home/build
