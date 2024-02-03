@@ -19,7 +19,7 @@ export const App: React.FunctionComponent = () => {
     <Stack horizontalAlign="center" verticalAlign="center" verticalFill styles={stackStyles} tokens={stackTokens}>
       <img className="App-logo" src={logo} alt="logo" />
       <Text variant="xxLarge" styles={boldStyle}>
-        Welcome to your Fluent UI app
+        Welcome to your Fluent UI
       </Text>
       <Text variant="large">For a guide on how to customize this project, check out the Fluent UI documentation.</Text>
       <Text variant="large" styles={boldStyle}>
