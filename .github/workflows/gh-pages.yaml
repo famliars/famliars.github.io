@@ -33,14 +33,14 @@ jobs:
             node-version: 18
       - name: Build Home 
         run: |
-         npm install home
-         npm --prefix home run build
+         npm install ./home
+         npm --prefix ./home run build
       - name: Deploy Home
         run: |
          git config --global user.name "${{ vars.USERNAME }}"
          git config --global user.email "${{ vars.USEREMAIL}}"
          git checkout -b gh-pages
          git rm -r .
-         git add -A home/build/*
+         git add -A ./home/build/*
          git commit -m "gh-pages deploy"
          git push origin gh-pages
