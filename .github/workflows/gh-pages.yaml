@@ -37,19 +37,8 @@ jobs:
         run: npm install ./home
       - name: Build Home
         run: npm --prefix ./home run build
-      - name: Configure Git
-        run: |
-          git config --global user.name "${{ vars.USERNAME }}"
-          git config --global user.email "${{ vars.USEREMAIL }}"
-          git remote set-url origin https://${{ github.actor }}:${{ secrets.GH_PAGES_TOKEN }}@github.com/${{ github.repository }}
-      - name: Switch Branch
-        run: |
-          git branch gh-pages
-          git rm -rf .
       - name: Deploy Home
-        run: |
-          git add -f ./home/build/
-      - name: Deploy Push
-        run: |
-          git commit -m "gh-pages deploy"
-          git push origin gh-pages
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: gh-pages
+          folder: build
