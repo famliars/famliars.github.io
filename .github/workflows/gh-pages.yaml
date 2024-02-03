@@ -44,7 +44,7 @@ jobs:
       - name: Switch Branch
         run: |
           git branch gh-pages
-          git rm -A .
+          git rm -rf .
       - name: Deploy Home
         run: |
           git add -f ./home/build/
