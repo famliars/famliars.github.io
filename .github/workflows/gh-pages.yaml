@@ -27,11 +27,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Build
+      - name: Setup
         uses: actions/setup-node@v4
         with:
             node-version: 18
-      - name: Build Home 
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+           '**/node_modules'
+           '**/.eslintcache'
+          key: ${{ runner.os }}-node-${{ hashFiles ( '**/package-lock.json' )}}
+      - name: Complete Home 
         run: |
          npm install ./home
          npm --prefix ./home run build
@@ -39,7 +46,7 @@ jobs:
         run: |
          git config --global user.name "${{ vars.USERNAME }}"
          git config --global user.email "${{ vars.USEREMAIL}}"
-         git checkout -b gh-pages
+         git switch gh-pages
          git rm -r .
          git add -A ./home/build/*
          git commit -m "gh-pages deploy"
