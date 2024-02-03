@@ -38,9 +38,10 @@ jobs:
            '**/node_modules'
            '**/.eslintcache'
           key: ${{ runner.os }}-node-${{ hashFiles ( '**/package-lock.json' )}}
-      - name: Complete Home 
+      - name: Install Dependencies
+        run: npm install ./home
+      - name: Build Home
         run: |
-         npm install ./home
          npm --prefix ./home run build
       - name: Configure Git
         run: |
@@ -48,7 +49,7 @@ jobs:
          git config --global user.email "${{ vars.USEREMAIL}}"
       - name: Switch Branch
         run: |
-         git branch -b gh-pages
+         git branch gh-pages
       - name: Deploy Home
         run: |
          git rm -r .
