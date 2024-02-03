@@ -39,8 +39,8 @@ jobs:
         run: npm --prefix ./home run build
       - name: Configure Git
         run: |
-          git config --global user.name "${{ secrets.USERNAME }}"
-          git config --global user.email "${{ secrets.USEREMAIL }}"
+          git config --global user.name "${{ vars.USERNAME }}"
+          git config --global user.email "${{ vars.USEREMAIL }}"
       - name: Switch Branch
         run: |
           git branch -D gh-pages || true
