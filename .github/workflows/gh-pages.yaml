@@ -1,27 +1,21 @@
 name: Deploy GitHub Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
+    branches:
+      - "main"
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  # Build job
   build:
     runs-on: ubuntu-latest
     steps:
@@ -30,33 +24,31 @@ jobs:
       - name: Setup
         uses: actions/setup-node@v4
         with:
-            node-version: 18
+          node-version: 18
       - name: Cache
         uses: actions/cache@v4
         with:
           path: |
-           '~/.npm'
-           '**/node_modules'
-           '**/.eslintcache'
-          key: ${{ runner.os }}-node-${{ hashFiles ('**/package-lock.json') }}
+            ~/.npm
+            **/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: ${{ runner.os }}-node-
       - name: Install Dependencies
         run: npm install ./home
       - name: Build Home
-        run: |
-         npm --prefix ./home run build
+        run: npm --prefix ./home run build
       - name: Configure Git
         run: |
-         git config --global user.name "${{ vars.USERNAME }}"
-         git config --global user.email "${{ vars.USEREMAIL}}"
+          git config --global user.name "${{ secrets.USERNAME }}"
+          git config --global user.email "${{ secrets.USEREMAIL }}"
       - name: Switch Branch
         run: |
-         git branch -D gh-pages
-         git checkout -b gh-pages
+          git branch -D gh-pages || true
+          git checkout -b gh-pages
       - name: Deploy Home
         run: |
-         git add -f ./home/build/
-         git commit -m "gh-pages deploy"
+          git add -f ./home/build/
+          git commit -m "gh-pages deploy"
       - name: Deploy Push
         run: |
-         git push origin gh-pages --force
+          git push origin gh-pages --force
