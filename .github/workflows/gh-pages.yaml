@@ -43,8 +43,8 @@ jobs:
           git config --global user.email "${{ vars.USEREMAIL }}"
       - name: Switch Branch
         run: |
-          git branch -D gh-pages || true
-          git remote add origin gh-pages
+          git branch gh-pages
+          git rm -A .
       - name: Deploy Home
         run: |
           git add -f ./home/build/
