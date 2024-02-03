@@ -39,6 +39,8 @@ jobs:
            '**/node_modules'
            '**/.eslintcache'
           key: ${{ runner.os }}-node-${{ hashFiles ( '**/package-lock.json' )}}
+          restore-keys: |
+      ${{ runner.os }}-node-
       - name: Install Dependencies
         run: npm install ./home
       - name: Build Home
