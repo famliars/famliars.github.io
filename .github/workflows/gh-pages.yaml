@@ -41,4 +41,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: ./home/build
-          token: ${{GH_PAGES_TOKEN}}
+          token: $GH_PAGES_TOKEN
