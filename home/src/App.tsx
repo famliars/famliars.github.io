@@ -1,4 +1,4 @@
-// App.jsx
+// App.tsx
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider, createTheme, TextField, mergeStyles } from '@fluentui/react';
 
@@ -21,18 +21,18 @@ const darkTheme = createTheme({
   },
 });
 
-const MirrorsPage = () => {
-  const [isDarkMode, setIsDarkMode] = useState(window.matchMedia('(prefers-color-scheme: dark)').matches);
+// MirrorsPage 组件
+const MirrorsPage: React.FC = () => {
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(window.matchMedia('(prefers-color-scheme: dark)').matches);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = (e) => setIsDarkMode(e.matches);
+    const handleChange = (e: MediaQueryListEvent) => setIsDarkMode(e.matches);
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  // 根据窗口宽度动态设置样式
-  const getWidthStyles = () => {
+  const getWidthStyles = (): React.CSSProperties => {
     const width = window.innerWidth;
     if (width <= 480) {
       return { width: '60%', minWidth: 240, padding: '0 15px' };
@@ -70,12 +70,13 @@ const MirrorsPage = () => {
   );
 };
 
-const App = () => {
-  const [isDarkMode, setIsDarkMode] = useState(window.matchMedia('(prefers-color-scheme: dark)').matches);
+// App 组件
+const App: React.FC = () => {
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(window.matchMedia('(prefers-color-scheme: dark)').matches);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = (e) => setIsDarkMode(e.matches);
+    const handleChange = (e: MediaQueryListEvent) => setIsDarkMode(e.matches);
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
@@ -87,4 +88,5 @@ const App = () => {
   );
 };
 
+// 确保正确导出 App 组件
 export default App;
