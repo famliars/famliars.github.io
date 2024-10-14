@@ -1,44 +1,90 @@
-import React from 'react';
-import { Stack, Text, Link, FontWeights, IStackTokens, IStackStyles, ITextStyles } from '@fluentui/react';
-import logo from './logo.svg';
-import './App.css';
+// App.jsx
+import React, { useState, useEffect } from 'react';
+import { ThemeProvider, createTheme, TextField, mergeStyles } from '@fluentui/react';
 
-const boldStyle: Partial<ITextStyles> = { root: { fontWeight: FontWeights.semibold } };
-const stackTokens: IStackTokens = { childrenGap: 15 };
-const stackStyles: Partial<IStackStyles> = {
-  root: {
-    width: '960px',
-    margin: '0 auto',
-    textAlign: 'center',
-    color: '#605e5c',
+// 定义 Light 和 Dark 主题
+const lightTheme = createTheme({
+  palette: {
+    themePrimary: '#111',
+    neutralLighter: '#fff',
+    neutralLight: '#ccc',
+    neutralTertiaryAlt: '#aaa',
   },
-};
+});
 
-export const App: React.FunctionComponent = () => {
+const darkTheme = createTheme({
+  palette: {
+    themePrimary: '#eee',
+    neutralLighter: '#111',
+    neutralLight: '#aaa',
+    neutralTertiaryAlt: '#ccc',
+  },
+});
+
+const MirrorsPage = () => {
+  const [isDarkMode, setIsDarkMode] = useState(window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e) => setIsDarkMode(e.matches);
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  // 根据窗口宽度动态设置样式
+  const getWidthStyles = () => {
+    const width = window.innerWidth;
+    if (width <= 480) {
+      return { width: '60%', minWidth: 240, padding: '0 15px' };
+    } else if (width <= 960) {
+      return { width: '50%', minWidth: 288, padding: '0 16px' };
+    } else if (width <= 1440) {
+      return { width: '40%', minWidth: 480, padding: '0 17px' };
+    } else {
+      return { width: '35%', minWidth: 576, padding: '0 18px' };
+    }
+  };
+
+  const styles = mergeStyles({
+    height: 60,
+    borderRadius: 2,
+    border: `1px solid ${isDarkMode ? '#aaa' : '#ccc'}`,
+    backgroundColor: isDarkMode ? '#111' : '#fff',
+    color: isDarkMode ? '#eee' : '#111',
+    ...getWidthStyles(),
+  });
+
   return (
-    <Stack horizontalAlign="center" verticalAlign="center" verticalFill styles={stackStyles} tokens={stackTokens}>
-      <img className="App-logo" src={logo} alt="logo" />
-      <Text variant="xxLarge" styles={boldStyle}>
-        Welcome to your Fluent UI
-      </Text>
-      <Text variant="large">For a guide on how to customize this project, check out the Fluent UI documentation.</Text>
-      <Text variant="large" styles={boldStyle}>
-        Essential links
-      </Text>
-      <Stack horizontal tokens={stackTokens} horizontalAlign="center">
-        <Link href="https://developer.microsoft.com/en-us/fluentui#/get-started/web">Docs</Link>
-        <Link href="https://stackoverflow.com/questions/tagged/office-ui-fabric">Stack Overflow</Link>
-        <Link href="https://github.com/microsoft/fluentui/">Github</Link>
-        <Link href="https://twitter.com/fluentui">Twitter</Link>
-      </Stack>
-      <Text variant="large" styles={boldStyle}>
-        Design system
-      </Text>
-      <Stack horizontal tokens={stackTokens} horizontalAlign="center">
-        <Link href="https://developer.microsoft.com/en-us/fluentui#/styles/web/icons">Icons</Link>
-        <Link href="https://developer.microsoft.com/en-us/fluentui#/styles/web">Styles</Link>
-        <Link href="https://aka.ms/themedesigner">Theme designer</Link>
-      </Stack>
-    </Stack>
+    <div className={mergeStyles({
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+      backgroundColor: isDarkMode ? '#111' : '#fff'
+    })}>
+      <TextField
+        placeholder="Unit"
+        styles={{ fieldGroup: { ...styles } }}
+      />
+    </div>
   );
 };
+
+const App = () => {
+  const [isDarkMode, setIsDarkMode] = useState(window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e) => setIsDarkMode(e.matches);
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  return (
+    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+      <MirrorsPage />
+    </ThemeProvider>
+  );
+};
+
+export default App;
